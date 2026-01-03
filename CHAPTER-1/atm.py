@@ -1,0 +1,88 @@
+class Atm:
+    # constructor
+    def __init__(self):
+         self.pin = ""
+         self.balance = 0
+         self.user_data = {}
+         self.menu()
+
+    def menu(self):
+        user_input = input("""
+        Welcome to the ATM Machine
+        PRESS
+        1. Enter 1 to Create Pin
+        2. Enter 2 to Deposit Money
+        3. Enter 3 to Withdraw Money
+        4. Enter 4 to Check Balance
+        5. Enter 5 to Exit
+        
+       """)
+        if user_input == "1":
+            print("seleted Create Pin")
+            if self.create_pin(self.user_data):
+                print("Pin creation successful")
+            else:
+                print("Pin creation failed")
+                
+        elif user_input == "2":
+            print("seleted Deposit Money")
+        elif user_input == "3":
+            print("seleted Withdraw Money")
+        elif user_input == "4":
+            print("seleted Check Money")
+        elif user_input == "5":
+            print("seleted Exit")
+        else:
+            print("Presses wrong button")
+            
+    
+    def create_pin(self, user_data):
+    
+        acc_max_try = 3
+        pin_max_try = 3
+        print("You are a new user please enter your account number: ")
+        while acc_max_try:
+            account_number = input("Enter your account number: ")
+            if not self.validate_account_number(account_number):
+                print("Entered account number is not valid\n")
+                acc_max_try -= 1
+                if acc_max_try == 0:
+                    print("You have exceeded the maximum number of tries")
+                    return False
+            else:
+                while pin_max_try:
+                    pin = input("Please enter your new pin: ")
+                    if not self.validate_pin(pin):
+                        print("Please create a valid pin")
+                        pin_max_try -= 1
+                        if pin_max_try == 0:
+                            print("You have exceeded the maximum number of tries")
+                            return False
+                    else:
+                        self.user_data[account_number] = pin
+                        print(self.user_data)
+                        break
+                return True
+        
+        print("Pin created successfully.")
+        print("Your account number is:", account_number)
+        print("Your pin is:", self.user_data[account_number])
+    def validate_account_number(self, account_number):
+        if len(account_number) < 6:
+            return False
+        else:
+            return True
+    def validate_pin(self, pin):
+        if len(pin) < 6:
+            return False
+        else:
+            return True
+    def update_pin(self):
+        pass
+    def authenticate_user(self, pasword):
+        pass
+    def deposit_money(self):
+        pass
+    def check_balance(self):
+        pass
+    
