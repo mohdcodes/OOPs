@@ -47,10 +47,17 @@ class Atm:
         
         elif user_input == "3":
             print("seleted Withdraw Money")
+        
         elif user_input == "4":
-            print("seleted Check Money")
+            print("seleted Check balance")
+            if self.check_balance():
+                print("Balance checked successfully")
+            else:
+                print("Balance check failed")
+        
         elif user_input == "5":
             print("seleted Exit")
+        
         else:
             print("Presses wrong button")
             
@@ -87,17 +94,18 @@ class Atm:
         print("Pin created successfully.")
         print("Your account number is:", account_number)
         print("Your pin is:", self.user_data.data[account_number])
+    
     def validate_account_number(self, account_number, user_data):
         if account_number in user_data.data or len(account_number) < 6:
             return False
         else:
             return True
+    
     def validate_pin(self, pin):
         if len(pin) < 6:
             return False
         else:
             return True
-    
     
     def update_pin(self):
         pass
@@ -131,7 +139,20 @@ class Atm:
         pass
     
     def check_balance(self):
-        pass
+        max_try = 3
+        while max_try:
+            account_number = input("Please Enter you Account Number: ")
+            pin = input("Please Enter your Pin: ")
+            if not (account_number in self.user_data.data and self.user_data.data[account_number]['pin'] == pin):
+                print("Invalid credentials try again\n")
+                max_try -= 1
+                if max_try == 0:
+                    print("You have exceeded the maximum number of tries")
+                    return False
+            else:
+                balance = self.user_data.data[account_number]['balance']
+                print(f"Your current balance is: {balance}")
+                return True
     
     def update_data(self, user_data, account_number=None, pin=None, balance=None):
         import json
