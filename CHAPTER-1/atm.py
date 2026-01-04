@@ -1,9 +1,13 @@
+class UserData:
+    def __init__(self):
+        self.data = {}
+
 class Atm:
-    # constructor
+    # constructor  
     def __init__(self):
          self.pin = ""
          self.balance = 0
-         self.user_data = {}
+         self.user_data = UserData()
          self.menu()
 
     def menu(self):
@@ -59,14 +63,14 @@ class Atm:
                             print("You have exceeded the maximum number of tries")
                             return False
                     else:
-                        self.user_data[account_number] = pin
-                        print(self.user_data)
+                        self.user_data.data[account_number] = {'pin': pin, 'balance': 0}
+                        print(self.user_data.data)
                         break
                 return True
         
         print("Pin created successfully.")
         print("Your account number is:", account_number)
-        print("Your pin is:", self.user_data[account_number])
+        print("Your pin is:", self.user_data.data[account_number])
     def validate_account_number(self, account_number):
         if len(account_number) < 6:
             return False
